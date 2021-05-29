@@ -1,0 +1,7 @@
+# Project exclude paths
+/starts-api/target/
+/starts-auth/target/
+/starts-common/target/
+/starts-gen/target/
+/starts-system/target/
+/starts-web/target/

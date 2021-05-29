@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.simba.system.mapper.OperLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.simba.system.entity.OperLog">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="business_type" property="businessType" />
+        <result column="method" property="method" />
+        <result column="action_method" property="actionMethod" />
+        <result column="operator_type" property="operatorType" />
+        <result column="oper_name" property="operName" />
+        <result column="dept_name" property="deptName" />
+        <result column="oper_url" property="operUrl" />
+        <result column="oper_ip" property="operIp" />
+        <result column="oper_location" property="operLocation" />
+        <result column="oper_param" property="operParam" />
+        <result column="status" property="status" />
+        <result column="result_msg" property="resultMsg" />
+        <result column="execute_time" property="executeTime" />
+        <result column="oper_time" property="operTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, title, business_type, method, action_method, operator_type, oper_name, dept_name, oper_url, oper_ip, oper_location, oper_param, status, result_msg, execute_time, oper_time
+    </sql>
+
+    <insert id="insertOperlog" parameterType="OperLog">
+        insert into sys_oper_log(title, business_type, method, action_method, operator_type, oper_name, dept_name, oper_url, oper_ip, oper_location, oper_param, status, result_msg, execute_time, oper_time)
+        values (#{title}, #{businessType}, #{method}, #{actionMethod}, #{operatorType}, #{operName}, #{deptName}, #{operUrl}, #{operIp}, #{operLocation}, #{operParam}, #{status}, #{resultMsg}, #{executeTime}, sysdate())
+    </insert>
+
+</mapper>

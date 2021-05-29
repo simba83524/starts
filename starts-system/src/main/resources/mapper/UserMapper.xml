@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.simba.system.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="UserResult" type="com.simba.system.entity.User">
+        <id column="id" property="id" />
+        <result column="user_name" property="userName" />
+        <result column="nick_name" property="nickName" />
+        <result column="type" property="type" />
+        <result column="password" property="password" />
+        <result column="email" property="email" />
+        <result column="qq" property="qq" />
+        <result column="phone" property="phone" />
+        <result column="sex" property="sex" />
+        <result column="avatar" property="avatar" />
+        <result column="status" property="status" />
+        <result column="login_ip" property="loginIp" />
+        <result column="login_time" property="loginTime" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="remarks" property="remarks" />
+        <result column="del_flag" property="delFlag" />
+    </resultMap>
+
+    <resultMap id="UserWithRole" type="com.simba.system.entity.User" extends="UserResult">
+        <collection property="roles" ofType="com.simba.system.entity.Role">
+            <id column="id" property="id" />
+            <result column="name" property="name" />
+            <result column="code" property="code" />
+            <result column="applications" property="applications" />
+            <result column="data_scope" property="dataScope" />
+            <result column="sort" property="sort" />
+            <result column="status" property="status" />
+            <result column="create_by" property="createBy" />
+            <result column="create_time" property="createTime" />
+            <result column="update_by" property="updateBy" />
+            <result column="update_time" property="updateTime" />
+            <result column="remarks" property="remarks" />
+            <result column="del_flag" property="delFlag" />
+        </collection>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_name, nick_name, type, password, email, qq, phone, sex, avatar, status, login_ip, login_time, create_by, create_time, update_by, update_time, remarks, del_flag
+    </sql>
+
+    <select id="getUserByUsername" resultMap="UserResult">
+        SELECT
+            a.*
+        FROM
+            sys_user a
+        WHERE
+            a.user_name = #{username}
+    </select>
+
+    <select id="selectUseByDept" resultMap="UserResult">
+        SELECT a.* FROM sys_user a
+        LEFT JOIN sys_user_role ur1 ON ur1.user_id = a.user_id
+        LEFT JOIN sys_role_dept rd1 ON rd1.role_id = ur1.role_id
+        <where>
+            a.del_flag = 0 AND status = 0
+            <if test="deptName != null and deptName != ''">
+                AND rd1.dept_name = #{deptName}
+            </if>
+            <if test="deptType != null and deptType != ''">
+                AND rd1.dept_type = #{deptType}
+            </if>
+        </where>
+        limit 1
+    </select>
+
+</mapper>

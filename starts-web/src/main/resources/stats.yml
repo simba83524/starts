@@ -1,0 +1,7 @@
+starts:
+  xss:
+    enabled: true
+    exclude-fields:
+      - noticeContent
+    exclude-urls:
+      - /system/notice/*
